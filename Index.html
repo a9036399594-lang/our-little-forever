@@ -1,0 +1,346 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Little Forever ❤️</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        blush: '#fff0f5',
+                        rosePink: '#ff4081',
+                        deepRose: '#c2185b',
+                        softLavender: '#f3e5f5',
+                        goldGlow: '#ffd700'
+                    },
+                    fontFamily: {
+                        script: ['"Dancing Script"', 'cursive'],
+                        sans: ['"Quicksand"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ffe6f0 0%, #fff0f5 50%, #f3e5f5 100%);
+            color: #4a2c3d;
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism styling */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.12);
+        }
+
+        /* Floating Hearts Animation */
+        .floating-heart {
+            position: fixed;
+            bottom: -30px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 7s linear infinite;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0.9; }
+            100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* Polaroid Photo Card */
+        .polaroid-frame {
+            background: #ffffff;
+            padding: 14px 14px 24px 14px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid #ffe4e8;
+        }
+
+        .polaroid-frame:hover {
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.2);
+        }
+
+        /* Photo orientation adjustments */
+        .img-contain {
+            object-fit: contain;
+            background-color: #fafafa;
+        }
+
+        .rotate-90-deg {
+            transform: rotate(90deg) scale(1.3);
+        }
+
+        /* Envelope animation */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+
+        .envelope {
+            width: 290px;
+            height: 190px;
+            background: #f06292;
+            position: relative;
+            border-radius: 0 0 16px 16px;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(233, 30, 99, 0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .envelope:hover {
+            transform: scale(1.03);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 145px solid transparent;
+            border-right: 145px solid transparent;
+            border-top: 110px solid #e91e63;
+            transform-origin: top;
+            transition: transform 0.5s ease;
+            z-index: 5;
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        /* Pulse glow animation */
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        .pulse-heart {
+            animation: heartPulse 1.8s infinite ease-in-out;
+        }
+
+        /* Smooth page scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+
+    <!-- FLOATING BACKGROUND HEARTS CONTAINER -->
+    <div id="heartsContainer" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
+
+    <!-- BACKGROUND MUSIC PLAYER -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-love-song-112199.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="musicBtn" class="fixed top-5 right-5 z-50 glass-card px-4 py-2.5 flex items-center gap-2 cursor-pointer border-2 border-rose-200 hover:scale-105 transition-all text-sm font-semibold text-rose-700 shadow-md">
+        <i class="fa-solid fa-music text-rose-500 animate-spin-slow" id="musicIcon"></i>
+        <span id="musicText">Play Music 🎵</span>
+    </div>
+
+    <!-- ================= 1. WELCOME SCREEN ================= -->
+    <section id="welcomeScreen" class="fixed inset-0 z-40 flex items-center justify-center p-4 bg-gradient-to-br from-rose-100 via-pink-50 to-purple-100">
+        <div class="glass-card max-w-md w-full p-8 text-center relative overflow-hidden">
+            <div class="text-5xl mb-4 pulse-heart inline-block">💖</div>
+            <h1 class="font-script text-4xl font-bold text-rose-700 mb-2">Hey Divya! ✨</h1>
+            <p class="text-rose-900 font-semibold mb-1">This little world belongs to you ❤️</p>
+            <p class="text-xs text-rose-600 italic mb-6">“Every picture holds a memory. Every memory holds a feeling. And every feeling reminds me of you.”</p>
+
+            <div class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-bold text-rose-800 uppercase tracking-wider mb-1">Your Name</label>
+                    <input type="text" id="inputName" placeholder="Enter your name (Divya)" class="w-full px-4 py-3 rounded-xl border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/90">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-rose-800 uppercase tracking-wider mb-1">Your Birthday (DD/MM)</label>
+                    <input type="text" id="inputBirthday" placeholder="e.g., 23/11" class="w-full px-4 py-3 rounded-xl border border-rose-200 focus:outline-none focus:ring-2 focus:ring-rose-400 text-sm bg-white/90">
+                </div>
+                <button onclick="unlockWorld()" class="w-full py-3.5 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-bold rounded-xl shadow-lg hover:from-pink-600 hover:to-rose-700 transform hover:-translate-y-0.5 transition-all duration-200 text-sm flex items-center justify-center gap-2">
+                    Enter Our World 💗 <i class="fa-solid fa-heart"></i>
+                </button>
+                <p id="welcomeError" class="text-xs text-red-500 text-center font-semibold mt-2 hidden"></p>
+                <p class="text-[10px] text-gray-400 text-center italic mt-2">✨ A playful warm welcome created with love</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN WEBSITE CONTENT (UNLOCKED AFTER WELCOME) -->
+    <div id="mainContent" class="hidden relative z-10">
+
+        <!-- STICKY NAVBAR -->
+        <nav class="sticky top-0 z-30 glass-card mx-4 my-3 px-6 py-3 flex items-center justify-between shadow-sm">
+            <div class="font-script text-2xl font-bold text-rose-700">Our Little Forever ❤️</div>
+            <ul class="hidden md:flex items-center gap-6 text-sm font-semibold text-rose-900">
+                <li><a href="#story" class="hover:text-rose-500 transition">Our Story</a></li>
+                <li><a href="#scrapbook" class="hover:text-rose-500 transition">Scrapbook</a></li>
+                <li><a href="#loveActions" class="hover:text-rose-500 transition">Love Notes</a></li>
+                <li><a href="#letterSection" class="hover:text-rose-500 transition">Open Letter</a></li>
+                <li><a href="#birthday" class="hover:text-rose-500 transition">Birthday 🎂</a></li>
+            </ul>
+        </nav>
+
+        <!-- ================= 2. OUR LOVE STORY ================= -->
+        <section id="story" class="max-w-4xl mx-auto px-4 py-12 text-center">
+            <div class="glass-card p-8 md:p-12 mb-8 relative overflow-hidden">
+                <span class="bg-rose-100 text-rose-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider inline-block mb-3">
+                    02 October 2022 — The Beginning of Us
+                </span>
+                <h2 class="font-script text-4xl md:text-5xl text-rose-800 font-bold mb-4">Divya, You Are My Favorite Chapter ❤️</h2>
+                
+                <!-- Hero Featured Image -->
+                <div class="max-w-md mx-auto my-6 rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+                    <img src="images/memory-1.jpg" onerror="this.src='1000155025.jpg'" alt="Divya and Me at Nandi Hills" class="w-full h-80 object-cover hover:scale-105 transition duration-500">
+                </div>
+
+                <p class="text-gray-700 leading-relaxed text-sm md:text-base max-w-2xl mx-auto mb-8 font-medium">
+                    “From 2 October 2022 to every tomorrow, our story is something I will always treasure. Every memory, every smile, and every little moment has its own special place in my heart.”
+                </p>
+
+                <!-- Relationship Live Counter -->
+                <div class="bg-white/80 rounded-2xl p-6 shadow-inner border border-rose-100">
+                    <h3 class="text-xs font-bold uppercase text-rose-500 tracking-widest mb-4">Time We've Been Creating Magic Together ✨</h3>
+                    <div class="grid grid-cols-3 md:grid-cols-6 gap-3 text-center">
+                        <div class="p-3 bg-pink-50 rounded-xl"><span id="cntYears" class="block text-2xl font-bold text-rose-600">0</span><span class="text-[10px] text-gray-500 font-semibold uppercase">Years</span></div>
+                        <div class="p-3 bg-pink-50 rounded-xl"><span id="cntMonths" class="block text-2xl font-bold text-rose-600">0</span><span class="text-[10px] text-gray-500 font-semibold uppercase">Months</span></div>
+                        <div class="p-3 bg-pink-50 rounded-xl"><span id="cntDays" class="block text-2xl font-bold text-rose-600">0</span><span class="text-[10px] text-gray-500 font-semibold uppercase">Days</span></div>
+                        <div class="p-3 bg-pink-50 rounded-xl"><span id="cntHours" class="block text-2xl font-bold text-rose-600">0</span><span class="text-[10px] text-gray-500 font-semibold uppercase">Hours</span></div>
+                        <div class="p-3 bg-pink-50 rounded-xl"><span id="cntMins" class="block text-2xl font-bold text-rose-600">0</span><span class="text-[10px] text-gray-500 font-semibold uppercase">Minutes</span></div>
+                        <div class="p-3 bg-pink-50 rounded-xl"><span id="cntSecs" class="block text-2xl font-bold text-rose-600">0</span><span class="text-[10px] text-gray-500 font-semibold uppercase">Seconds</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3. OUR PHOTO SCRAPBOOK ================= -->
+        <section id="scrapbook" class="max-w-6xl mx-auto px-4 py-12">
+            <div class="text-center mb-10">
+                <h2 class="font-script text-4xl md:text-5xl text-rose-700 font-bold">Five Pictures, A Thousand Feelings 💞</h2>
+                <p class="text-sm text-gray-600 mt-2">Click any photo to view in full size with memory notes</p>
+            </div>
+
+            <!-- Responsive Grid of Polaroid Frames -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Photo 1 (Featured) -->
+                <div class="polaroid-frame cursor-pointer" onclick="openLightbox(0)">
+                    <div class="h-72 w-full overflow-hidden rounded-md bg-gray-100 mb-4 flex items-center justify-center">
+                        <img src="images/memory-1.jpg" onerror="this.src='1000155025.jpg'" alt="Nandi Hills Trip" class="w-full h-full object-cover">
+                    </div>
+                    <p class="font-script text-2xl text-rose-800 text-center font-bold">Our Scenic Escapes 🌲</p>
+                    <p class="text-xs text-gray-500 text-center mt-1">23 May 2026 — Nandi Hills</p>
+                    <p class="text-xs text-rose-900/80 text-center mt-2 font-medium italic">"Standing together high above the clouds, holding you close."</p>
+                </div>
+
+                <!-- Photo 2 (Cute selfie with filter) -->
+                <div class="polaroid-frame cursor-pointer" onclick="openLightbox(1)">
+                    <div class="h-72 w-full overflow-hidden rounded-md bg-gray-100 mb-4 flex items-center justify-center relative">
+                        <!-- Transformed orientation container for memory-2 -->
+                        <div class="w-full h-full flex items-center justify-center bg-gray-900">
+                            <img src="images/memory-2.jpg" onerror="this.src='1000155023.jpg'" alt="Playful Flower Filter Selfie" class="w-full h-full object-contain rotate-90-deg">
+                        </div>
+                    </div>
+                    <p class="font-script text-2xl text-rose-800 text-center font-bold">Playful & Cute 🌸</p>
+                    <p class="text-xs text-gray-500 text-center mt-1">Monochrome & Flower Petals</p>
+                    <p class="text-xs text-rose-900/80 text-center mt-2 font-medium italic">"Your cute innocent gaze always makes my heart melt."</p>
+                </div>
+
+                <!-- Photo 3 (Traditional Saree Selfie) -->
+                <div class="polaroid-frame cursor-pointer" onclick="openLightbox(2)">
+                    <div class="h-72 w-full overflow-hidden rounded-md bg-gray-100 mb-4 flex items-center justify-center">
+                        <img src="images/memory-3.jpg" onerror="this.src='1000155024.jpg'" alt="Pink Saree Couple Picture" class="w-full h-full object-cover">
+                    </div>
+                    <p class="font-script text-2xl text-rose-800 text-center font-bold">Cherished Elegance 🌺</p>
+                    <p class="text-xs text-gray-500 text-center mt-1">Beautiful Indian Attire</p>
+                    <p class="text-xs text-rose-900/80 text-center mt-2 font-medium italic">"Dressed up in traditional wear, looking stunning beside me."</p>
+                </div>
+
+                <!-- Photo 4 (Park Selfie in Purple) -->
+                <div class="polaroid-frame cursor-pointer" onclick="openLightbox(3)">
+                    <div class="h-72 w-full overflow-hidden rounded-md bg-gray-100 mb-4 flex items-center justify-center">
+                        <img src="images/memory-4.jpg" onerror="this.src='1000155021.jpg'" alt="Park Date Selfie" class="w-full h-full object-cover">
+                    </div>
+                    <p class="font-script text-2xl text-rose-800 text-center font-bold">Park Smiles 🌷</p>
+                    <p class="text-xs text-gray-500 text-center mt-1">Purple Tones & Sunshine</p>
+                    <p class="text-xs text-rose-900/80 text-center mt-2 font-medium italic">"A quiet sunny day in the park, enjoying your gentle smile."</p>
+                </div>
+
+                <!-- Photo 5 (Green Saree Selfie) -->
+                <div class="polaroid-frame cursor-pointer" onclick="openLightbox(4)">
+                    <div class="h-72 w-full overflow-hidden rounded-md bg-gray-100 mb-4 flex items-center justify-center">
+                        <img src="images/memory-5.jpg" onerror="this.src='1000155022.jpg'" alt="Green Saree Selfie" class="w-full h-full object-cover">
+                    </div>
+                    <p class="font-script text-2xl text-rose-800 text-center font-bold">Sweetest Hugs 💖</p>
+                    <p class="text-xs text-gray-500 text-center mt-1">Wrapped in Love</p>
+                    <p class="text-xs text-rose-900/80 text-center mt-2 font-medium italic">"Leaning on me, creating memories we'll cherish forever."</p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- LIGHTBOX MODAL WITH NEXT/PREV CONTROLS -->
+        <div id="lightboxModal" class="fixed inset-0 z-50 bg-black/90 hidden backdrop-blur-md flex flex-col items-center justify-center p-4">
+            <button onclick="closeLightbox()" class="absolute top-5 right-5 text-white text-3xl hover:text-rose-400 transition"><i class="fa-solid fa-xmark"></i></button>
+
+            <div class="relative max-w-2xl w-full flex flex-col items-center">
+                <div id="lightboxImageContainer" class="max-h-[70vh] w-full flex items-center justify-center overflow-hidden rounded-xl bg-black/40 border border-white/20 p-2">
+                    <img id="lightboxImg" src="" alt="Zoomed Photo" class="max-h-[65vh] max-w-full object-contain">
+                </div>
+
+                <div class="mt-4 text-center text-white space-y-1">
+                    <h3 id="lightboxTitle" class="font-script text-3xl text-rose-300 font-bold"></h3>
+                    <p id="lightboxCaption" class="text-sm text-gray-200 italic font-medium max-w-lg mx-auto"></p>
+                </div>
+
+                <!-- Carousel Controls -->
+                <div class="flex items-center gap-8 mt-6">
+                    <button onclick="changeLightboxPhoto(-1)" class="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center hover:bg-rose-600 transition">
+                        <i class="fa-solid fa-chevron-left text-xl"></i>
+                    </button>
+                    <span id="lightboxCounter" class="text-xs text-rose-200 font-bold uppercase tracking-widest">1 / 5</span>
+                    <button onclick="changeLightboxPhoto(1)" class="w-12 h-12 rounded-full bg-white/20 text-white flex items-center justify-center hover:bg-rose-600 transition">
+                        <i class="fa-solid fa-chevron-right text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 4 & 5. INTERACTIVE LOVE ACTIONS ================= -->
+        <section id="loveActions" class="max-w-4xl mx-auto px-4 py-12">
+            <div class="text-center mb-8">
+                <h2 class="font-script text-4xl text-rose-700 font-bold">Virtual Hugs & Kisses 🫂💋</h2>
+                <p class="text-sm text-gray-600 mt-1">Whenever you need a little warmth or comfort, tap a button below!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Send a Hug -->
+                <div class="glass-card p-6 text-center hover:border-rose-300 transition">
+                    <div class="text-5xl mb-3">🫂</div>
+                    <h3 class="font-bold text-lg text-rose-800 mb-2">Need a Warm Hug, Divya?</h3>
+                    <p class="text-xs text-gray-600 mb-4">Click to receive a virtual bear hug wrapped in affection.</p>
+                    <button onclick="triggerLoveAction('hug')" class="w-full py-3 bg-gradient-to-r from-rose-400 to-pink-500 text-white font-bold rounded-xl shadow-md hover:from-rose-500 hover:to-pink-600 transition">
+                        Divya, Come Here for a Hug 🫂
+                    </button>
+                </div>
+
+                <!-- Virtual Kiss -->
+                <div class="glass-card p-6 text-center hover:border-rose-300 transition">
+                    <div class="text-5xl mb-3">💋</div>
+                    <h3 class="font-bold text-lg text-rose-800 mb-2">A Sweet Little Kiss</h3>
+                    <p class="text-xs text-gray-60
